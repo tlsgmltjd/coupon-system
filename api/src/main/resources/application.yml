@@ -8,13 +8,8 @@ spring:
     generate-ddl: 'false'
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
-    properties:
-      hibernate:
-        format_sql: 'true'
-    show-sql: 'true'
     hibernate:
       ddl-auto: create
-    open-in-view: false
 
 # docker pull mysql
 # docker run -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123123 --name mysql mysql
