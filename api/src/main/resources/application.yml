@@ -1,11 +1,20 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/coupon_example
+    url: jdbc:mysql://localhost:3307/coupon
     username: root
-    password: 1234
+    password: 123123
   jpa:
+    generate-ddl: 'false'
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'
     hibernate:
       ddl-auto: create
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+# docker pull mysql
+# docker run -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123123 --name mysql mysql
