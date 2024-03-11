@@ -10,6 +10,10 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: create
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6380
 
 # docker pull mysql
 # docker run -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123123 --name mysql mysql

@@ -41,6 +41,7 @@ class CouponServiceTest {
         CountDownLatch latch = new CountDownLatch(threadCount);
 
         for (int i = 0; i < threadCount; i++) {
+            // redis incr key:value
             long userId = i;
             executorService.submit(() -> {
                 try {
