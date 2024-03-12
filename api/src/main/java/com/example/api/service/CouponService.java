@@ -1,7 +1,6 @@
 package com.example.api.service;
 
-import com.example.api.domain.Coupon;
-import com.example.api.priducer.CouponCreateProducer;
+import com.example.api.producer.CouponCreateProducer;
 import com.example.api.repository.CouponCountRedisRepository;
 import com.example.api.repository.CouponJpaRepository;
 import org.springframework.stereotype.Service;

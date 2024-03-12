@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/coupon
+    username: root
+    password: 123123
+  jpa:
+    generate-ddl: 'false'
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6380

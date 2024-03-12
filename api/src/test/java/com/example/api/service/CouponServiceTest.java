@@ -54,6 +54,8 @@ class CouponServiceTest {
 
         latch.await();
 
+        Thread.sleep(5000);
+
         long count = couponJpaRepository.count();
 
         assertThat(count).isEqualTo(100);

@@ -1,4 +1,4 @@
-package com.example.api.priducer;
+package com.example.api.producer;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
