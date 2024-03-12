@@ -1,6 +1,7 @@
 package com.example.api.service;
 
 import com.example.api.domain.Coupon;
+import com.example.api.priducer.CouponCreateProducer;
 import com.example.api.repository.CouponCountRedisRepository;
 import com.example.api.repository.CouponJpaRepository;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,12 @@ public class CouponService {
 
     private final CouponJpaRepository couponJpaRepository;
     private final CouponCountRedisRepository couponCountRedisRepository;
+    private final CouponCreateProducer couponCreateProducer;
 
-    public CouponService(CouponJpaRepository couponJpaRepository, CouponCountRedisRepository couponCountRedisRepository) {
+    public CouponService(CouponJpaRepository couponJpaRepository, CouponCountRedisRepository couponCountRedisRepository, CouponCreateProducer couponCreateProducer) {
         this.couponJpaRepository = couponJpaRepository;
         this.couponCountRedisRepository = couponCountRedisRepository;
+        this.couponCreateProducer = couponCreateProducer;
     }
 
     public void apply(Long userId) {
@@ -24,7 +27,7 @@ public class CouponService {
             return;
         }
 
-        couponJpaRepository.save(new Coupon(userId));
+        couponCreateProducer.create(userId);
 
     }
 
