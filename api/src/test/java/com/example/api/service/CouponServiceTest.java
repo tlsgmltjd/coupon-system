@@ -123,4 +123,33 @@ class CouponServiceTest {
 
     }
 
+
+    @Test
+    public void 한명당_한개의쿠폰만_응모() throws InterruptedException {
+        int threadCount = 1000;
+
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            long userId = 1L;
+            executorService.submit(() -> {
+                try {
+                    couponService.apply(userId);
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        Thread.sleep(5000);
+
+        long count = couponJpaRepository.count();
+
+        assertThat(count).isEqualTo(1);
+
+    }
+
 }
