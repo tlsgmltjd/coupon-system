@@ -1,7 +1,11 @@
 package com.example.consumer.consumer;
 
 import com.example.consumer.domain.Coupon;
+import com.example.consumer.domain.FailedEvent;
 import com.example.consumer.repository.CouponJpaRepository;
+import com.example.consumer.repository.FailedEventRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -9,14 +13,29 @@ import org.springframework.stereotype.Component;
 public class CouponCreateConsumer {
 
     private final CouponJpaRepository couponJpaRepository;
+    private final FailedEventRepository failedEventRepository;
+    private final Logger logger = LoggerFactory.getLogger(CouponCreateConsumer.class);
 
-    public CouponCreateConsumer(CouponJpaRepository couponJpaRepository) {
+    public CouponCreateConsumer(CouponJpaRepository couponJpaRepository, FailedEventRepository failedEventRepository) {
         this.couponJpaRepository = couponJpaRepository;
+        this.failedEventRepository = failedEventRepository;
     }
 
     @KafkaListener(topics = "coupon_create", groupId = "group_1")
     public void listener(Long userId) {
-        couponJpaRepository.save(new Coupon(userId));
+        try {
+            couponJpaRepository.save(new Coupon(userId));
+        } catch (Exception e) {
+            logger.error("failed to create coupon::" + userId);
+            failedEventRepository.save(new FailedEvent(userId));
+        }
+
+        // + 쿠폰 저장에 userId를 FailedEvent를 디비에 저장한다.
+
+        // 완성된 로직
+        // API(Producer) -> Topic <-
+        // Consumer(실패시) -> 쿠폰 발급
+        // Consumer(실패시) -> FailedEvent를 생성한다 -> 후에 저장된 FailedEvent를 모두 쿠폰 디비에 저장해준다면 정상적으로 모든 쿠폰이 발급될 것이다.
     }
 
     // 테스트 케이스를 실행시키면 쿠폰이 적게 생성된걸 확인할 수 있다.

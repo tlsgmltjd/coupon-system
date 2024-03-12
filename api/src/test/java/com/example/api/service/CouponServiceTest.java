@@ -123,7 +123,6 @@ class CouponServiceTest {
 
     }
 
-
     @Test
     public void 한명당_한개의쿠폰만_응모() throws InterruptedException {
         int threadCount = 1000;
